@@ -1,0 +1,27 @@
+lang: es
+
+UI_Controls/PRAYERWHEEL_OPEN: Abrir rueda de Plegarias
+UI_Controls/PRAYERWHEEL_LEFT: Rotar Plegaria a la izquierda
+UI_Controls/PRAYERWHEEL_RIGHT: Rotar Plegaria a la derecha
+
+lang: en
+
+UI_Controls/PRAYERWHEEL_OPEN: Open Prayer wheel
+UI_Controls/PRAYERWHEEL_LEFT: Rotate Prayer wheel left
+UI_Controls/PRAYERWHEEL_RIGHT: Rotate Prayer wheel right
+
+lang: fr
+
+
+lang: de
+
+
+lang: it
+
+
+lang: pt-BR
+
+
+lang: an
+
+
