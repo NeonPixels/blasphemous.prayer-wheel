@@ -31,17 +31,19 @@ namespace PrayerWheel.CustomInputBlocker
 		{
             if(!IsEnabled) return;
 
+            if (actionId < 0) return;
+
 			if (!inputBlockers.ContainsKey(name))
-			{
-				inputBlockers.Add(name, actionId);
-				
+            {
+                inputBlockers.Add(name, actionId);
+
                 if (this.OnInputLocked != null)
-				{
-					this.OnInputLocked(actionId);
-				}
-				
+                {
+                    this.OnInputLocked(actionId);
+                }
+
                 ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been enabled.");
-			}						
+            }						
 		}
 
         public void RemoveBlocker(string name)
@@ -73,9 +75,11 @@ namespace PrayerWheel.CustomInputBlocker
         {
             if(!IsEnabled) return false;
 
-            foreach(int value in inputBlockers.Values)
+            if (actionId < 0) return false;
+
+            foreach (int value in inputBlockers.Values)
             {
-                if(value == actionId) return true;
+                if (value == actionId) return true;
             }
 
             return false;

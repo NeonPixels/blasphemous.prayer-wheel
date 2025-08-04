@@ -28,6 +28,16 @@ namespace PrayerWheel
         public float timeInputInteractHold = 0.5f;
 
 
+        public static string INPUT_LEFT_KB = "PrayerWheel_Input_Left_KB";
+        public static string INPUT_RIGHT_KB = "PrayerWheel_Input_Right_KB";
+        public static string INPUT_LEFT_JOY = "PrayerWheel_Input_Left_JOY";
+        public static string INPUT_RIGHT_JOY = "PrayerWheel_Input_Right_JOY";
+
+        public static int ACTION_LEFT_KB = -1;
+        public static int ACTION_RIGHT_KB = -1;
+        public static int ACTION_LEFT_JOY = RewiredConsts.Action.Flask;
+        public static int ACTION_RIGHT_JOY = RewiredConsts.Action.Parry;
+
         // ----- Private Properties -----
 
         private bool IsInteractButtonHeld { get; set; }
@@ -343,36 +353,38 @@ namespace PrayerWheel
             CheckIfInteractButtonIsHeld();
 
             // Check if button is being held, but do nothing if we don't have prayers
-            if(IsInteractButtonHeld && Core.InventoryManager.GetPrayersOwned().Count > 0)
+            if (IsInteractButtonHeld && Core.InventoryManager.GetPrayersOwned().Count > 0)
             {
                 //ModLog.Info($"{name}: Holding down interact button...");
                 ShowOverlay();
 
                 // TODO: Block configured keybinds that match out actions, not specific actions
-                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYER_SCROLL_LEFT", RewiredConsts.Action.Flask);
-                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYER_SCROLL_RIGHT", RewiredConsts.Action.Parry);
-
+                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_LEFT_KB", PrayerWheel.ACTION_LEFT_KB);
+                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_LEFT_JOY", PrayerWheel.ACTION_LEFT_JOY);
+                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_RIGHT_KB", PrayerWheel.ACTION_RIGHT_KB);
+                Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_RIGHT_JOY", PrayerWheel.ACTION_RIGHT_JOY);
+                
                 // for(int idx = (int)KeyCode.Joystick1Button0; idx <= (int)KeyCode.Joystick1Button19; idx++)
                 // {
                 //     if(UnityEngine.Input.GetKeyDown((KeyCode)idx)) ModLog.Info($"Joystick 1 Button {idx} down");
                 // }
 
-                if(Main.PrayerWheelMod.InputHandler.GetKeyDown("Prayer_Scroll_Left"))                
+                if (Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_LEFT_KB) || Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_LEFT_JOY))
                 {
-                    //ModLog.Info($"{name}: Prayer Scroll Left");
                     SwapLeft();
                 }
-
-                if(Main.PrayerWheelMod.InputHandler.GetKeyDown("Prayer_Scroll_Right"))
+                else if (Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_RIGHT_KB) || Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_RIGHT_JOY))
                 {
-                    //ModLog.Info($"{name}: Prayer Scroll Right");
                     SwapRight();
-                }               
+                }
             }
             else
             {
-                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYER_SCROLL_LEFT");
-                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYER_SCROLL_RIGHT");
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_LEFT_KB");
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_LEFT_JOY");
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_RIGHT_KB");
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_RIGHT_JOY");
+
                 HideOverlay();
             }
         }

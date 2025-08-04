@@ -4,7 +4,7 @@ using UnityEngine;
 using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 using Blasphemous.ModdingAPI.Files;
-
+using Rewired;
 
 namespace PrayerWheel
 {
@@ -38,10 +38,10 @@ namespace PrayerWheel
             // TODO: Make configurable
             Main.PrayerWheelMod.InputHandler.RegisterDefaultKeybindings(new Dictionary<string, KeyCode>()
             {
-                { "Prayer_Scroll_Left", KeyCode.Joystick1Button4 },
-                { "Prayer_Scroll_Right", KeyCode.Joystick1Button5 },
-                { "Prayer_Scroll_Left", KeyCode.O },
-                { "Prayer_Scroll_Right", KeyCode.P }
+                { PrayerWheel.INPUT_LEFT_KB, KeyCode.O },
+                { PrayerWheel.INPUT_RIGHT_KB, KeyCode.P },
+                { PrayerWheel.INPUT_LEFT_JOY, KeyCode.JoystickButton4 },
+                { PrayerWheel.INPUT_RIGHT_JOY, KeyCode.JoystickButton5 }
             });
 
             IsEnabled = true;
