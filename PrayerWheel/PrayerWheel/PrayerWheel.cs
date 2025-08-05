@@ -5,6 +5,7 @@ using Blasphemous.ModdingAPI.Input;
 using Blasphemous.ModdingAPI;
 using DG.Tweening;
 using Framework.Inventory;
+using System.Collections.Generic;
 
 namespace PrayerWheel
 {
@@ -33,6 +34,7 @@ namespace PrayerWheel
         public static string INPUT_LEFT_JOY = "PrayerWheel_Input_Left_JOY";
         public static string INPUT_RIGHT_JOY = "PrayerWheel_Input_Right_JOY";
 
+        public List<int> InputActionsToBlock { get; set; } = new List<int>();
         public static int ACTION_LEFT_KB = -1;
         public static int ACTION_RIGHT_KB = -1;
         public static int ACTION_LEFT_JOY = RewiredConsts.Action.Flask;
@@ -358,7 +360,12 @@ namespace PrayerWheel
                 //ModLog.Info($"{name}: Holding down interact button...");
                 ShowOverlay();
 
-                // TODO: Block configured keybinds that match out actions, not specific actions
+                foreach (int action in InputActionsToBlock)
+                { 
+                    Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_BLOCK_" + action, action);
+                }
+
+                // TODO: Use above
                 Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_LEFT_KB", PrayerWheel.ACTION_LEFT_KB);
                 Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_LEFT_JOY", PrayerWheel.ACTION_LEFT_JOY);
                 Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_SCROLL_RIGHT_KB", PrayerWheel.ACTION_RIGHT_KB);
@@ -380,6 +387,12 @@ namespace PrayerWheel
             }
             else
             {
+                foreach (int action in InputActionsToBlock)
+                { 
+                    Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_BLOCK_" + action);
+                }
+
+                // TODO: Use above
                 Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_LEFT_KB");
                 Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_LEFT_JOY");
                 Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_SCROLL_RIGHT_KB");

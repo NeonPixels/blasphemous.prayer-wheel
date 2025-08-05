@@ -4,7 +4,6 @@ using UnityEngine;
 using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 using Blasphemous.ModdingAPI.Files;
-using Rewired;
 
 namespace PrayerWheel
 {
@@ -81,6 +80,7 @@ namespace PrayerWheel
         private const string PrayerWheelName = "PrayerWheel";
         private const string PrefabName = PrayerWheelName +"_PREFAB";
 
+        private InputHandling _inputHandling = new InputHandling();
         
         private bool Assemble()
         {
@@ -90,20 +90,20 @@ namespace PrayerWheel
             ModLog.Info("PrayerWheelFeature::Assemble: Instantiate object");
 
             PrayerWheel_Prefab = new GameObject(PrefabName);
-            if(null == PrayerWheel_Prefab)
+            if (null == PrayerWheel_Prefab)
             {
                 ModLog.Error("PrayerWheelFeature::Assemble: Failed to instantiate object!");
                 return false;
             }
             PrayerWheel_Prefab.transform.localPosition = new Vector2(0f, 0f);
-            
+
             PrayerWheel behaviour = PrayerWheel_Prefab.AddComponent<PrayerWheel>();
-            if(null == behaviour)
+            if (null == behaviour)
             {
                 ModLog.Error("PrayerWheelFeature::Assemble: Failed to instantiate behaviour!");
                 return false;
             }
-           
+
             ModLog.Info("PrayerWheelFeature::Assemble: Create prayer icons");
             behaviour.PrayerActive = new GameObject("PrayerActive");
             {
@@ -111,7 +111,7 @@ namespace PrayerWheel
                 SpriteRenderer renderer = behaviour.PrayerActive.AddComponent<SpriteRenderer>();
                 renderer.sortingLayerName = "In-Game UI";
                 renderer.sortingOrder = 0;
-                
+
                 behaviour.PrayerActive.transform.parent = PrayerWheel_Prefab.transform;
             }
 
@@ -124,28 +124,43 @@ namespace PrayerWheel
             behaviour.PrayerRight.transform.localPosition = new Vector2(0.8f, 0f);
 
 
-            ModLog.Info("PrayerWheelFeature::Assemble: Create active prayer frame");            
+            ModLog.Info("PrayerWheelFeature::Assemble: Create active prayer frame");
             {
                 behaviour.PrayerFrame = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
                 behaviour.PrayerFrame.name = "PrayerFrame";
 
                 SpriteImportOptions importOptions = new()
                 {
-                    Pivot = new Vector2(0.5f,0.5f)
+                    Pivot = new Vector2(0.5f, 0.5f)
                 };
 
                 SpriteRenderer spriteRenderer = behaviour.PrayerFrame.GetComponent<SpriteRenderer>();
                 Sprite sprite;
 
-                Main.PrayerWheelMod.FileHandler.LoadDataAsSprite( "ActivePrayerFrame.png", 
+                Main.PrayerWheelMod.FileHandler.LoadDataAsSprite("ActivePrayerFrame.png",
                                                                   out sprite,
-                                                                  importOptions );
+                                                                  importOptions);
 
                 spriteRenderer.sprite = sprite;
                 spriteRenderer.sortingOrder = 100;
-                                                                          
+
             }
 
+            // TODO: Move this to initialization
+            // ModLog.Info("PrayerWheelFeature::Assemble: Get input actions to block from configured bindings");
+            // {
+            //     behaviour.InputActionsToBlock.Clear();
+
+            //     foreach (KeyCode binding in _inputHandling.GetConfiguredBindings())
+            //     {
+            //         foreach (int action in _inputHandling.GetAssignedActions(binding))
+            //         {
+            //             if (behaviour.InputActionsToBlock.Contains(action)) continue;
+
+            //             behaviour.InputActionsToBlock.Add(action);
+            //         }
+            //     }
+            // }
 
 
             PrayerWheel_Prefab.SetActive(false); // Disable until deployed

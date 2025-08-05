@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blasphemous.ModdingAPI;
+using Blasphemous.ModdingAPI.Input;
 using Blasphemous.ModdingAPI.Persistence;
 using Framework.Managers;
 using Rewired;
@@ -82,17 +83,168 @@ namespace PrayerWheel
 
             if (oldLevel == "" && newLevel == "MainMenu")
             {
-                InitializeInputBlockers();
+                List<KeyCode> bindings = LoadConfiguredInputBindings();
+
+                List<int> actions = GetInputBindingActions(bindings);
+
+                //InitializeInputBlockers(bindings);
             }
         }
 
-        private void InitializeInputBlockers()
-        { 
+        private List<KeyCode> LoadConfiguredInputBindings()
+        {
+            //ModLog.Info("LoadConfiguredInputBindings START");
+
+            Dictionary<string, KeyCode> bindings = ReflectionHelper.GetInstanceField(typeof(InputHandler), Main.PrayerWheelMod.InputHandler, "_keybindings") as Dictionary<string, KeyCode>;
+
+            if (bindings == null) return null;
+
+            List<KeyCode> retList = new List<KeyCode>();
+
+            foreach (string key in bindings.Keys)
+            {
+                //ModLog.Info($"Key:{key} Value:{bindings[key].ToString()}");
+                retList.Add(bindings[key]);
+            }
+
+            //ModLog.Info("LoadConfiguredInputBindings END");
+
+            return retList;
+        }
+
+        private List<int> GetInputBindingActions(List<KeyCode> bindings)
+        {
+            List<int> actions = new List<int>();
+
+            GetKeyboardBindingActions(bindings, actions);
+            GetJoystickBindingActions(bindings, actions);
+            
+
+            return actions;
+        }
+
+        private void GetKeyboardBindingActions(List<KeyCode> bindings, List<int> actions)
+        {
+            Player player = Rewired.ReInput.players.GetPlayer(0);
+            List<string> actionNames = Core.ControlRemapManager.GetAllActionNamesInOrder();
+
+            foreach (string actionName in actionNames)
+            {
+                foreach (ActionElementMap aem in player.controllers.maps.ButtonMapsWithAction(ControllerType.Keyboard, actionName, false))
+                {
+                    InputAction action = ReInput.mapping.GetAction(aem.actionId);
+                    if (action == null) continue; // invalid Action
+                    if (aem.keyCode == KeyCode.None) continue; // there is no key assigned
+
+                    if (bindings.Contains(aem.keyCode))
+                    {
+                        actions.Add(aem.actionId);
+                        ModLog.Info($"Added Keyboard Action '{actionName}' for KeyCode '{aem.keyCode.ToString()}'");
+                    }
+                }
+            }
+        }
+
+        private void GetJoystickBindingActions(List<KeyCode> bindings, List<int> actions)
+        {
+            ModLog.Info("GetJoystickBindingActions START");
+
+            Player player = Rewired.ReInput.players.GetPlayer(0);
+
+            Dictionary<int, List<int>> joystickBindings = ParseJoystickBindings(bindings);
+
+            ModLog.Info("JoystickBindings:");
+            foreach (int key in joystickBindings.Keys)
+            {
+                string values = "";
+                foreach (int value in joystickBindings[key]) values += (value + " ");
+
+                ModLog.Info($"[{key}][{values}]");
+            }
+
+            // All elements mapped to all joysticks in the player
+            foreach (Joystick joystick in player.controllers.Joysticks)
+            {
+                ModLog.Info("Joystick: " + joystick.id);
+                // TODO: If no joystick is connected, add callback to ReInput.ControllerConnectedEvent?
+
+                if (joystickBindings[joystick.id].Count == 0) continue;
+
+                // Loop over all Joystick Maps in the Player for this Joystick
+                foreach (JoystickMap map in player.controllers.maps.GetMaps<JoystickMap>(joystick.id))
+                {
+                    // Loop over all button maps
+                    foreach (ActionElementMap aem in map.ButtonMaps)
+                    {
+                        if (joystickBindings[joystick.id].Contains(aem.elementIndex))
+                        {
+                            if (aem.actionId >= 0)
+                            {
+                                actions.Add(aem.actionId);
+
+                                ModLog.Info("Added action " + aem.actionId + " for Joystick " + joystick.id + " Button " + aem.elementIndex + ": " + ReInput.mapping.GetAction(aem.actionId).name);
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        private Dictionary<int, List<int>> ParseJoystickBindings(List<KeyCode> bindings)
+        {
+            Dictionary<int, List<int>> retDict = new Dictionary<int, List<int>>();
+            for (int idx = 0; idx < 9; idx++)
+            {
+                retDict[idx] = new List<int>();
+            }
+
+            foreach (KeyCode binding in bindings)
+            {
+                if (binding < KeyCode.JoystickButton0) continue;
+
+                int value = (int)binding - (int)KeyCode.JoystickButton0;
+
+                int joystickIndex = value / 20;
+                int buttonIndex = value % 20;
+
+                ModLog.Info($"{binding.ToString()}: Joy {joystickIndex} Button {buttonIndex}");
+                if (!retDict[joystickIndex].Contains(buttonIndex))
+                {
+                    retDict[joystickIndex].Add(buttonIndex);
+
+                    ModLog.Info($"Joystick: {joystickIndex} List Count: {retDict[joystickIndex].Count}");
+                }
+            }
+
+            return retDict;
+        }
+
+
+
+        public KeyCode ConvertJoystickToKeyCode(int number, int button)
+        {
+            if (number < 0 || number > 8 || button < 0 || button > 19)
+            {
+                // TODO: Log error?
+                return KeyCode.None;
+            }
+
+            int offset = (int)KeyCode.JoystickButton0;
+            int range = (int)KeyCode.Joystick1Button0 - (int)KeyCode.JoystickButton0;
+
+            int value = offset + (number * range) + button;
+
+            return (KeyCode)value;
+        }
+
+        private void InitializeInputBlockers(List<KeyCode> bindings)
+        {
             Player player = Rewired.ReInput.players.GetPlayer(0);
 
             List<string> actionNames = Core.ControlRemapManager.GetAllActionNamesInOrder();
 
-            
+
 
 
             foreach (string actionName in actionNames)
