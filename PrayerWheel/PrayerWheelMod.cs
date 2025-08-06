@@ -25,8 +25,9 @@ namespace PrayerWheel
 
         // --- Libraries and Dependencies ---
 
-        public PrefabsScene.PrefabsSceneFeature PrefabSceneFeature { get; private set; }
-        public CustomInputBlocker.CustomInputBlocker CustomInputBlocker { get; private set; }
+        public Utilities.PrefabHelper PrefabHelper { get; private set; }
+        public Utilities.CustomInputBlocker CustomInputBlocker { get; private set; }
+
 
         // --- Features ---
 
@@ -37,11 +38,8 @@ namespace PrayerWheel
             LocalizationHandler.RegisterDefaultLanguage("es");
             ModLog.Info($"{ModInfo.MOD_NAME} has been initialized");
 
-            PrefabSceneFeature = new PrefabsScene.PrefabsSceneFeature();
-            PrefabSceneFeature.Enable();
-
-            CustomInputBlocker = new CustomInputBlocker.CustomInputBlocker();
-            CustomInputBlocker.Enable();
+            PrefabHelper       = new Utilities.PrefabHelper();
+            CustomInputBlocker = new Utilities.CustomInputBlocker();
 
             PrayerWheelFeature = new PrayerWheelFeature();
             PrayerWheelFeature.Enable();

@@ -3,33 +3,19 @@ using Framework.Managers;
 using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 
-namespace PrayerWheel.CustomInputBlocker
+namespace PrayerWheel.Utilities
 {
     public class CustomInputBlocker
     {
-        public bool IsEnabled { get; private set;}
-
         private readonly Dictionary<string, int> inputBlockers = new Dictionary<string, int>();
                 
         public event Core.SimpleEventParam OnInputLocked;
 
 		public event Core.SimpleEventParam OnInputUnlocked;
 
-        public void Enable()
-        {
-            IsEnabled = true;
-        }
-
-        public void Disable()
-        {
-            RemoveAllBlockers();
-            IsEnabled = false;
-        }
-
 
 		public void SetBlocker(string name, int actionId)
 		{
-            if(!IsEnabled) return;
 
             if (actionId < 0) return;
 
@@ -48,8 +34,6 @@ namespace PrayerWheel.CustomInputBlocker
 
         public void RemoveBlocker(string name)
         {
-            if(!IsEnabled) return;
-
             if (inputBlockers.ContainsKey(name))
 			{
                 int actionId = inputBlockers[name];
@@ -66,15 +50,11 @@ namespace PrayerWheel.CustomInputBlocker
 
         public bool HasBlocker(string name)
         {
-            if(!IsEnabled) return false;
-
             return inputBlockers.ContainsKey(name);
         }
 
         public bool HasBlocker(int actionId)
         {
-            if(!IsEnabled) return false;
-
             if (actionId < 0) return false;
 
             foreach (int value in inputBlockers.Values)
@@ -87,8 +67,6 @@ namespace PrayerWheel.CustomInputBlocker
 
         public int GetBlockedAction(string name)
         {
-            if(!IsEnabled) return -1;
-
             if( inputBlockers.TryGetValue(name, out int value) )
             {
                 return value;
@@ -99,8 +77,6 @@ namespace PrayerWheel.CustomInputBlocker
 
 		private void RemoveAllBlockers()
 		{
-            if(!IsEnabled) return;
-
 			foreach(string name in inputBlockers.Keys)
             {
                 RemoveBlocker(name);
@@ -118,8 +94,6 @@ namespace PrayerWheel.CustomInputBlocker
     {
         public static bool Prefix(int actionId)
         {
-            if(!Main.PrayerWheelMod.CustomInputBlocker.IsEnabled) return true;
-
             if(Main.PrayerWheelMod.CustomInputBlocker.HasBlocker(actionId))
             {
                 //ModLog.Info($"Input [{actionId}] blocked");
@@ -135,8 +109,6 @@ namespace PrayerWheel.CustomInputBlocker
     {
         public static bool Prefix(int actionId)
         {
-            if(!Main.PrayerWheelMod.CustomInputBlocker.IsEnabled) return true;
-
             if(Main.PrayerWheelMod.CustomInputBlocker.HasBlocker(actionId))
             {
                 //ModLog.Info($"Input [{actionId}] blocked");

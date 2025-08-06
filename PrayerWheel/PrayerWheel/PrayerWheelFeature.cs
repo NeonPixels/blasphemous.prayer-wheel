@@ -165,7 +165,7 @@ namespace PrayerWheel
 
             PrayerWheel_Prefab.SetActive(false); // Disable until deployed
 
-            Main.PrayerWheelMod.PrefabSceneFeature.Store(PrayerWheel_Prefab);
+            Main.PrayerWheelMod.PrefabHelper.Store(PrayerWheel_Prefab);
 
             ModLog.Info("PrayerWheelFeature::Assemble: DONE");
 
@@ -206,8 +206,8 @@ namespace PrayerWheel
                 return;
             }
 
-           GameObject deployedPrayerWheel = Main.PrayerWheelMod.PrefabSceneFeature.Instantiate(PrefabName, penitent.transform);
-            if(null == deployedPrayerWheel)
+            GameObject deployedPrayerWheel = Main.PrayerWheelMod.PrefabHelper.Instantiate(PrefabName, penitent.transform);
+            if (null == deployedPrayerWheel)
             {
                 ModLog.Error("Failed to instantiate and deploy PrayerWheel!");
                 Disable();
