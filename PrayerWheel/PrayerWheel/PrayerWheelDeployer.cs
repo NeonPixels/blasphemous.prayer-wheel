@@ -17,53 +17,28 @@ namespace PrayerWheel
     /// <summary>
     /// TODO
     /// </summary>
-    public class PrayerWheelFeature
+    public class PrayerWheelDeployer
     {
-        public bool IsEnabled { get; private set; }
 
-        public void Enable()
+        public PrayerWheelDeployer()
         {
-            ModLog.Info("PrayerWheel Enable START");
-
-            if(!Assemble())
+            if (!Assemble())
             {
                 ModLog.Error("Failed to assemble PrayerWheel! Feature can't be enabled!");
                 Disable();
                 return;
             }
 
-		    SpawnManager.OnPlayerSpawn += Deploy;
-            
-            // TODO: Make configurable
-            Main.PrayerWheelMod.InputHandler.RegisterDefaultKeybindings(new Dictionary<string, KeyCode>()
-            {
-                { PrayerWheel.INPUT_LEFT_KB, KeyCode.O },
-                { PrayerWheel.INPUT_RIGHT_KB, KeyCode.P },
-                { PrayerWheel.INPUT_LEFT_JOY, KeyCode.JoystickButton4 },
-                { PrayerWheel.INPUT_RIGHT_JOY, KeyCode.JoystickButton5 }
-            });
+            SpawnManager.OnPlayerSpawn += Deploy;
 
-            IsEnabled = true;
             ModLog.Info("PrayerWheel Feature Enabled!");
         }
 
         public void Disable()
         {
-            ModLog.Info("PrayerWheel Disable START");
-
             SpawnManager.OnPlayerSpawn -= Deploy;
             Remove();
-
-            IsEnabled = false;
-            
-            ModLog.Info("PrayerWheel Feature Disabled!");
         }
-
-        public PrayerWheelFeature()
-        {
-            IsEnabled = false;
-        }
-
 
         // --- PrayerWheel structure ---
         // PrayerWheel: GameObject
@@ -80,31 +55,32 @@ namespace PrayerWheel
         private const string PrayerWheelName = "PrayerWheel";
         private const string PrefabName = PrayerWheelName +"_PREFAB";
 
-        private InputHandling _inputHandling = new InputHandling();
+        public List<int> InputActionsToBlock_KB { get; set; } = new List<int>();
+        public List<int> InputActionsToBlock_JOY { get; set; } = new List<int>();
         
         private bool Assemble()
         {
-            ModLog.Info("PrayerWheelFeature::Assemble: START");
+            ModLog.Info("Assemble: START");
 
 
-            ModLog.Info("PrayerWheelFeature::Assemble: Instantiate object");
+            ModLog.Info("Assemble: Instantiate object");
 
             PrayerWheel_Prefab = new GameObject(PrefabName);
             if (null == PrayerWheel_Prefab)
             {
-                ModLog.Error("PrayerWheelFeature::Assemble: Failed to instantiate object!");
+                ModLog.Error("Assemble: Failed to instantiate object!");
                 return false;
             }
             PrayerWheel_Prefab.transform.localPosition = new Vector2(0f, 0f);
 
-            PrayerWheel behaviour = PrayerWheel_Prefab.AddComponent<PrayerWheel>();
+            PrayerWheelBehaviour behaviour = PrayerWheel_Prefab.AddComponent<PrayerWheelBehaviour>();
             if (null == behaviour)
             {
-                ModLog.Error("PrayerWheelFeature::Assemble: Failed to instantiate behaviour!");
+                ModLog.Error("Assemble: Failed to instantiate behaviour!");
                 return false;
             }
 
-            ModLog.Info("PrayerWheelFeature::Assemble: Create prayer icons");
+            ModLog.Info("Assemble: Create prayer icons");
             behaviour.PrayerActive = new GameObject("PrayerActive");
             {
                 behaviour.PrayerActive.transform.localPosition = new Vector2(0f, 0f);
@@ -124,7 +100,7 @@ namespace PrayerWheel
             behaviour.PrayerRight.transform.localPosition = new Vector2(0.8f, 0f);
 
 
-            ModLog.Info("PrayerWheelFeature::Assemble: Create active prayer frame");
+            ModLog.Info("Assemble: Create active prayer frame");
             {
                 behaviour.PrayerFrame = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
                 behaviour.PrayerFrame.name = "PrayerFrame";
@@ -146,28 +122,11 @@ namespace PrayerWheel
 
             }
 
-            // TODO: Move this to initialization
-            // ModLog.Info("PrayerWheelFeature::Assemble: Get input actions to block from configured bindings");
-            // {
-            //     behaviour.InputActionsToBlock.Clear();
-
-            //     foreach (KeyCode binding in _inputHandling.GetConfiguredBindings())
-            //     {
-            //         foreach (int action in _inputHandling.GetAssignedActions(binding))
-            //         {
-            //             if (behaviour.InputActionsToBlock.Contains(action)) continue;
-
-            //             behaviour.InputActionsToBlock.Add(action);
-            //         }
-            //     }
-            // }
-
-
             PrayerWheel_Prefab.SetActive(false); // Disable until deployed
 
             Main.PrayerWheelMod.PrefabHelper.Store(PrayerWheel_Prefab);
 
-            ModLog.Info("PrayerWheelFeature::Assemble: DONE");
+            ModLog.Info("Assemble: DONE");
 
             return true;
         }
@@ -215,7 +174,9 @@ namespace PrayerWheel
             }
 
             deployedPrayerWheel.name = PrayerWheelName;
-            deployedPrayerWheel.GetComponent<PrayerWheel>().player = penitent;
+            deployedPrayerWheel.GetComponent<PrayerWheelBehaviour>().penitent = penitent;
+            deployedPrayerWheel.GetComponent<PrayerWheelBehaviour>().InputActionsToBlock_KB = InputActionsToBlock_KB;
+            deployedPrayerWheel.GetComponent<PrayerWheelBehaviour>().InputActionsToBlock_JOY = InputActionsToBlock_JOY;
             deployedPrayerWheel.SetActive(true);
 
             if(!IsDeployed(penitent))
@@ -230,7 +191,7 @@ namespace PrayerWheel
 
         private void Remove()
         {
-            ModLog.Info("Removing PrayerWheel feature...");
+            ModLog.Info("Removing PrayerWheel...");
 
             if(null != PrayerWheel_Prefab)
                 Object.Destroy(PrayerWheel_Prefab);
@@ -243,8 +204,7 @@ namespace PrayerWheel
                 }
             }
 
-            ModLog.Info("PrayerWheel feature Removed!");
+            ModLog.Info("PrayerWheel Removed!");
         }
-    
     }
 }

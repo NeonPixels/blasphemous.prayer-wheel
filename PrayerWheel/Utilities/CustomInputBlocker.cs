@@ -36,16 +36,21 @@ namespace PrayerWheel.Utilities
         {
             if (inputBlockers.ContainsKey(name))
 			{
-                int actionId = inputBlockers[name];
-				inputBlockers.Remove(name);
-				
-                if (this.OnInputUnlocked != null)
-				{
-					this.OnInputUnlocked(actionId);
-				}
+                RemoveBlocker_Internal(name);
+            }
+        }
 
-				ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been disabled.");
-			}
+        private void RemoveBlocker_Internal(string name)
+        {
+            int actionId = inputBlockers[name];
+            inputBlockers.Remove(name);
+
+            if (this.OnInputUnlocked != null)
+            {
+                this.OnInputUnlocked(actionId);
+            }
+            
+            ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been disabled.");
         }
 
         public bool HasBlocker(string name)
@@ -75,11 +80,12 @@ namespace PrayerWheel.Utilities
             return -1;
         }
 
-		private void RemoveAllBlockers()
+		public void RemoveAllBlockers()
 		{
-			foreach(string name in inputBlockers.Keys)
+            //TODO: out of sync error here
+			foreach (string name in inputBlockers.Keys)
             {
-                RemoveBlocker(name);
+                RemoveBlocker_Internal(name);
             }
 
             inputBlockers.Clear();

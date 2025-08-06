@@ -37,7 +37,7 @@ namespace PrayerWheel.Utilities
                 }
                 else
                 {
-                    ModLog.Info($"Replacing previous instance of prefab '{prefab.name}'");
+                    // ModLog.Info($"Replacing previous instance of prefab '{prefab.name}'");
                     Object.Destroy(previousPrefab);
                 }
             }
@@ -51,7 +51,7 @@ namespace PrayerWheel.Utilities
 
             if (null != previousPrefab)
             {
-                ModLog.Info($"Removing instance of prefab '{name}'");
+                // ModLog.Info($"Removing instance of prefab '{name}'");
                 Object.Destroy(previousPrefab);
             }
             else
@@ -71,11 +71,11 @@ namespace PrayerWheel.Utilities
             }
 
             GameObject newInstance = GameObject.Instantiate(prefab, parent);
-            ModLog.Info("Instantiating Stored Prefab:");
-            ModLog.Info("  Prefab:");
-            ModLog.Info($"    Name: '{prefab.name}' Parent: '{prefab.transform.parent.name}' Scene: '{prefab.scene.name}'");
-            ModLog.Info("  New Instance:");
-            ModLog.Info($"    Name: '{newInstance.name}' Parent: '{newInstance.transform.parent.name}' Scene: {newInstance.scene.name}");
+            // ModLog.Info("Instantiating Stored Prefab:");
+            // ModLog.Info("  Prefab:");
+            // ModLog.Info($"    Name: '{prefab.name}' Parent: '{prefab.transform.parent.name}' Scene: '{prefab.scene.name}'");
+            // ModLog.Info("  New Instance:");
+            // ModLog.Info($"    Name: '{newInstance.name}' Parent: '{newInstance.transform.parent.name}' Scene: {newInstance.scene.name}");
 
             return newInstance;
         }
