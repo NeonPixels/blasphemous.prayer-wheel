@@ -7,15 +7,8 @@ using Blasphemous.ModdingAPI.Files;
 
 namespace PrayerWheel
 {
-    // TODO: Allow selecting prayers without opening the menu
-
-    // Step 1: Player holds "use" button
-    // Step 2: Prayer icons appear above Penitent, displaying current, prev and next prayers (icons appear below if penitent is too close to screen top)
-    // Step 3: Using left/right keys (or camera stick) the currently selected prayer is swapped
-
-
     /// <summary>
-    /// TODO
+    /// Constructs the PrayerWheel Prefab object, and deploys it when needed.
     /// </summary>
     public class PrayerWheelDeployer
     {

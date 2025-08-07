@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Input;
 using Rewired;
 using UnityEngine;
-using System.Linq;
 using Framework.Managers;
 
 namespace PrayerWheel.Utilities
 {
-
     public static class InputMappingHelper
     {
         public static bool AreJoysticksAvailable()

@@ -37,10 +37,7 @@ namespace PrayerWheel
 
         public List<int> InputActionsToBlock_KB { get; set; } = new List<int>();
         public List<int> InputActionsToBlock_JOY { get; set; } = new List<int>();
-        // public static int ACTION_LEFT_KB = RewiredConsts.Action.Interact;
-        // public static int ACTION_RIGHT_KB = -1;
-        // public static int ACTION_LEFT_JOY = RewiredConsts.Action.Flask;
-        // public static int ACTION_RIGHT_JOY = RewiredConsts.Action.Parry;
+
 
         // ----- Private Properties -----
 
@@ -208,49 +205,63 @@ namespace PrayerWheel
             IsOverlayVisible = false;
             IsOverlayTransitioning = false;
 
-            PrayerFrame.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            PrayerFrame.GetComponent<SpriteRenderer>().color  = _colorInvisible;
             PrayerActive.GetComponent<SpriteRenderer>().color = _colorInvisible;
-            PrayerLeft.GetComponent<SpriteRenderer>().color = _colorInvisible;
-            PrayerRight.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            PrayerLeft.GetComponent<SpriteRenderer>().color   = _colorInvisible;
+            PrayerRight.GetComponent<SpriteRenderer>().color  = _colorInvisible;
 
             //ModLog.Info($"{name}: Overlay invisible!");
         }
 
         // -- Blockers --
 
+        private bool _inputActionsBlocked = false;
 
         private void BlockActionInputs()
         {
-            if (IsOverlayVisible) return;
+            if (_inputActionsBlocked) return;
 
             switch (GetActiveControllerType())
             {
                 case ControllerType.Joystick:
-                {
-                    foreach (int action in InputActionsToBlock_JOY)
                     {
-                        Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_BLOCK_" + action, action);
-                    }
+                        ModLog.Info("Set Joystick blockers");
+                        foreach (int action in InputActionsToBlock_JOY)
+                        {
+                            Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_BLOCK_" + action, action);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 default:
-                {
-                    foreach (int action in InputActionsToBlock_KB)
                     {
-                        Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_BLOCK_" + action, action);
-                    }
+                        ModLog.Info("Set Keyboard blockers");
+                        foreach (int action in InputActionsToBlock_KB)
+                        {
+                            Main.PrayerWheelMod.CustomInputBlocker.SetBlocker("PRAYERWHEEL_BLOCK_" + action, action);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
+
+            _inputActionsBlocked = true;
         }
 
         private void UnblockActionInputs()
         {
-            if (!IsOverlayVisible) return;
-            
-            Main.PrayerWheelMod.CustomInputBlocker.RemoveAllBlockers();
+            if (!_inputActionsBlocked) return;
+
+            foreach (int action in InputActionsToBlock_KB)
+            {
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_BLOCK_" + action);
+            }
+            foreach (int action in InputActionsToBlock_JOY)
+            {
+                Main.PrayerWheelMod.CustomInputBlocker.RemoveBlocker("PRAYERWHEEL_BLOCK_" + action);
+            }
+
+            _inputActionsBlocked = false;
         }
 
         // -- Prayers --
@@ -372,10 +383,10 @@ namespace PrayerWheel
             }
 
             // Reassign elements, as cloning the prefab breaks these links
-            PrayerFrame = this.gameObject.transform.Find("PrayerFrame").gameObject;
+            PrayerFrame  = this.gameObject.transform.Find("PrayerFrame").gameObject;
             PrayerActive = this.gameObject.transform.Find("PrayerActive").gameObject;
-            PrayerLeft = this.gameObject.transform.Find("PrayerLeft").gameObject;
-            PrayerRight = this.gameObject.transform.Find("PrayerRight").gameObject;
+            PrayerLeft   = this.gameObject.transform.Find("PrayerLeft").gameObject;
+            PrayerRight  = this.gameObject.transform.Find("PrayerRight").gameObject;
 
             UpdatePrayers();
             OverlayInvisible();
@@ -427,6 +438,7 @@ namespace PrayerWheel
         void OnDestroy()
         {
             ResetHoldStatus();
+            UnblockActionInputs();
             ModLog.Info($"{name}: PrayerWheel Destroyed");
         }
 
