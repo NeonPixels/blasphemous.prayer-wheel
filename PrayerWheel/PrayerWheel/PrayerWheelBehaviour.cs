@@ -163,6 +163,12 @@ namespace PrayerWheel
         public GameObject PrayerLeft { get; set; }
         public GameObject PrayerRight { get; set; }
 
+        // Fake prayer icons used for animation
+        public GameObject FakePrayerActive { get; set; }
+        public GameObject FakePrayerLeft { get; set; }
+        public GameObject FakePrayerRight { get; set; }
+        public GameObject FakePrayerIncoming { get; set; }
+
         private Prayer _emptyPrayer = new Prayer();
 
         private bool IsOverlayVisible { get; set; }
@@ -237,10 +243,15 @@ namespace PrayerWheel
             IsOverlayVisible = false;
             IsOverlayTransitioning = false;
 
-            PrayerFrame.GetComponent<SpriteRenderer>().color  = _colorInvisible;
+            PrayerFrame.GetComponent<SpriteRenderer>().color = _colorInvisible;
             PrayerActive.GetComponent<SpriteRenderer>().color = _colorInvisible;
-            PrayerLeft.GetComponent<SpriteRenderer>().color   = _colorInvisible;
-            PrayerRight.GetComponent<SpriteRenderer>().color  = _colorInvisible;
+            PrayerLeft.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            PrayerRight.GetComponent<SpriteRenderer>().color = _colorInvisible;
+
+            FakePrayerActive.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            FakePrayerLeft.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            FakePrayerRight.GetComponent<SpriteRenderer>().color = _colorInvisible;
+            FakePrayerIncoming.GetComponent<SpriteRenderer>().color  = _colorInvisible;
 
             //ModLog.Info($"{name}: Overlay invisible!");
         }
@@ -326,15 +337,18 @@ namespace PrayerWheel
             if (Core.InventoryManager.GetPrayersOwned().Count <= 0) return _emptyPrayer;
 
             int equippedIndex = GetEquippedPrayerIndex();
-            int rightIndex = equippedIndex - 1;
+            int leftIndex = equippedIndex - 1;
 
             // If we only have one prayer and it is equipped, don't show prayer on the left
             if (Core.InventoryManager.GetPrayersOwned().Count == 1 && equippedIndex >= 0) return _emptyPrayer;
 
             // Wrap-around
-            if (rightIndex < 0) return Core.InventoryManager.GetPrayersOwned()[Core.InventoryManager.GetPrayersOwned().Count - 1];
+            if (leftIndex < 0)
+            {
+                leftIndex = Core.InventoryManager.GetPrayersOwned().Count - 1;
+            }
 
-            return Core.InventoryManager.GetPrayersOwned()[rightIndex];
+            return Core.InventoryManager.GetPrayersOwned()[leftIndex];
         }
 
         private Prayer GetPrayerRight()
@@ -348,9 +362,51 @@ namespace PrayerWheel
             if (Core.InventoryManager.GetPrayersOwned().Count == 1 && equippedIndex >= 0) return _emptyPrayer;
 
             // Wrap-around
-            if (rightIndex >= Core.InventoryManager.GetPrayersOwned().Count) return Core.InventoryManager.GetPrayersOwned()[0];
+            if (rightIndex >= Core.InventoryManager.GetPrayersOwned().Count)
+            {
+                rightIndex = 0;
+            }
 
             return Core.InventoryManager.GetPrayersOwned()[rightIndex];
+        }
+        
+
+        private Prayer GetPrayerIncomingLeft()
+        {
+            if (Core.InventoryManager.GetPrayersOwned().Count <= 0) return _emptyPrayer;
+
+            int equippedIndex = GetEquippedPrayerIndex();
+
+            if (Core.InventoryManager.GetPrayersOwned().Count == 1) return _emptyPrayer;
+
+            int leftIncomingIndex = equippedIndex - 2;
+
+            // Wrap-around
+            if (leftIncomingIndex < 0)
+            {
+                leftIncomingIndex += Core.InventoryManager.GetPrayersOwned().Count;
+            }
+    
+            return Core.InventoryManager.GetPrayersOwned()[leftIncomingIndex];
+        }
+
+        private Prayer GetPrayerIncomingRight()
+        {
+            if (Core.InventoryManager.GetPrayersOwned().Count <= 0) return _emptyPrayer;
+
+            int equippedIndex = GetEquippedPrayerIndex();
+
+            if (Core.InventoryManager.GetPrayersOwned().Count == 1) return _emptyPrayer;
+
+            int rightIncomingIndex = equippedIndex + 2;
+
+            // Wrap-around
+            if (rightIncomingIndex >= Core.InventoryManager.GetPrayersOwned().Count)
+            {
+                rightIncomingIndex -= Core.InventoryManager.GetPrayersOwned().Count;
+            }
+    
+            return Core.InventoryManager.GetPrayersOwned()[rightIncomingIndex];
         }
 
         private void UpdatePrayers()
@@ -358,10 +414,16 @@ namespace PrayerWheel
             PrayerActive.GetComponent<SpriteRenderer>().sprite = GetPrayerActive().picture;
             PrayerLeft.GetComponent<SpriteRenderer>().sprite = GetPrayerLeft().picture;
             PrayerRight.GetComponent<SpriteRenderer>().sprite = GetPrayerRight().picture;
+
+            FakePrayerActive.GetComponent<SpriteRenderer>().sprite = GetPrayerActive().picture;
+            FakePrayerLeft.GetComponent<SpriteRenderer>().sprite = GetPrayerLeft().picture;
+            FakePrayerRight.GetComponent<SpriteRenderer>().sprite = GetPrayerRight().picture;
         }
 
         private void SwapLeft()
         {
+            SlidePrayersLeft();
+
             Prayer nextPrayer = GetPrayerLeft();
             if (!Core.InventoryManager.IsPrayerOwned(nextPrayer))
             {
@@ -388,6 +450,45 @@ namespace PrayerWheel
             UpdatePrayers();
 
             // ModLog.Info("Swapping to the right");
+        }
+
+        // ----- Prayer Swap animation -----
+
+        
+        private bool IsAnimationRunning { get; set; }
+
+        private const float _animationFadeTime = 1.0f;
+
+        private void OnAnimationRunning()
+        { 
+            IsAnimationRunning = true;
+        }
+
+        private void OnAnimationEnded()
+        { 
+            IsAnimationRunning = false;
+        }
+
+        private void SlidePrayersLeft()
+        {
+
+            // FakePrayerActive.GetComponent<SpriteRenderer>().sprite = GetPrayerActive().picture;
+            // FakePrayerLeft.GetComponent<SpriteRenderer>().sprite = GetPrayerLeft().picture;
+            // FakePrayerRight.GetComponent<SpriteRenderer>().sprite = GetPrayerRight().picture;
+            if (!IsAnimationRunning)
+            {
+                FakePrayerIncoming.GetComponent<SpriteRenderer>().color = _colorInvisible;
+                FakePrayerIncoming.GetComponent<SpriteRenderer>().sprite = GetPrayerIncomingLeft().picture;
+                FakePrayerIncoming.transform.localPosition = new Vector2(-0.8f, -0.8f);
+
+                Tweener tweener = FakePrayerIncoming.transform.DOLocalMoveX(0.8f, _animationFadeTime).SetEase(Ease.OutCubic);//.SetDelay(0.1f + delay);
+                tweener.onComplete = OnAnimationEnded;
+		        tweener.onPlay = OnAnimationRunning;
+
+                FakePrayerIncoming.GetComponent<SpriteRenderer>().DOFade(_colorVisibleSide.a, _animationFadeTime);
+                                                                    //.OnComplete(OnAnimationEnded).OnUpdate(OnAnimationRunning);
+            }
+
         }
 
 
@@ -419,6 +520,10 @@ namespace PrayerWheel
             PrayerActive = this.gameObject.transform.Find("PrayerActive").gameObject;
             PrayerLeft   = this.gameObject.transform.Find("PrayerLeft").gameObject;
             PrayerRight  = this.gameObject.transform.Find("PrayerRight").gameObject;
+            FakePrayerActive    = this.gameObject.transform.Find("FakePrayerActive").gameObject;
+            FakePrayerLeft      = this.gameObject.transform.Find("FakePrayerLeft").gameObject;
+            FakePrayerRight     = this.gameObject.transform.Find("FakePrayerRight").gameObject;
+            FakePrayerIncoming  = this.gameObject.transform.Find("FakePrayerIncoming").gameObject;
 
             UpdatePrayers();
             OverlayInvisible();
