@@ -7,6 +7,8 @@ using DG.Tweening;
 using Framework.Inventory;
 using System.Collections.Generic;
 using Rewired;
+using Gameplay.GameControllers.Bosses.Isidora;
+using Gameplay.UI;
 
 namespace PrayerWheel
 {
@@ -44,7 +46,9 @@ namespace PrayerWheel
         private bool IsInteractButtonHeld { get; set; }
 
 
-        private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING" }; //TODO: Add more blockers?
+        // Base game input blockers that prevent activating the prayer wheel
+        private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING", "dog_block" };
+         //TODO: Add more blockers?
 
         private float deltaTimeButtonHeld = 0.0f;
 
@@ -85,6 +89,30 @@ namespace PrayerWheel
             }
         }
 
+        /// <summary>
+        /// In situations where the player is not allowed to use the inventory,
+        /// the prayerwheel should be disabled
+        /// </summary>
+        private bool IsInventoryAllowed
+        {
+            get
+            {
+                return UIController.instance.CanOpenInventory;
+            }
+        }
+
+        /// <summary>
+        /// In the base game you can't swap prayers during the Isidora fight, so 
+        /// the prayer wheel is also disabled.
+        /// </summary>
+        /// <returns>true if Isidora boss fight is active, false otherwise</returns>
+        private bool IsInIsidoraBossfight()
+        {
+            return (Core.LevelManager.currentLevel.LevelName.Equals("D01BZ08S01")
+                    || Core.LevelManager.currentLevel.LevelName.Equals("D22Z01S18"))
+                    && (bool)UnityEngine.Object.FindObjectOfType<IsidoraBehaviour>();
+        }
+
         private void ResetHoldStatus()
         {
             // if(IsInteractButtonHeld)
@@ -93,6 +121,8 @@ namespace PrayerWheel
             //                 + (IsInputBlocked?" InputBlocked":"")
             //                 + (!IsPlayerInValidState?" PlayerNotInValidState":"")
             //                 + (!IsGameInValidState?" GameNotInValidState":"")
+            //                 + (!IsInventoryAllowed?" InventoryLocked":"")
+            //                 + (IsInIsidoraBossfight?" IsInIsidoraBossfight":"")
             //                 + (Main.PrayerWheelMod.InputHandler.GetButtonUp(ButtonCode.Interact)?" ButtonReleased":"")
             //             );
             // }
@@ -106,7 +136,9 @@ namespace PrayerWheel
             if (Main.PrayerWheelMod.InputHandler.GetButtonUp(ButtonCode.Interact)
                  || IsInputBlocked
                  || !IsPlayerInValidState
-                 || !IsGameInValidState)
+                 || !IsGameInValidState
+                 || !IsInventoryAllowed
+                 || IsInIsidoraBossfight())
             {
                 ResetHoldStatus();
                 return;
@@ -393,8 +425,6 @@ namespace PrayerWheel
 
             ModLog.Info($"{name}: PrayerWheel Started!");
         }
-
-        // TODO: Disable feature in specific situations, like the fight with Isidora or the final scene in the eternal processions
 
         private void Update()
         {
