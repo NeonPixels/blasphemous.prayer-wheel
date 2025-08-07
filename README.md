@@ -2,7 +2,7 @@
   <h1 align="center">Prayer Wheel</h1><!-- <img src="logo.png"> -->
   
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.md)
-[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md)
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/README.es.md)
 
 </p>
 
@@ -20,7 +20,7 @@
 
 - [Links](https://github.com/NeonPixels/blasphemous.prayer-wheel#links)
 - [Installation](https://github.com/NeonPixels/blasphemous.prayer-wheel#installation)
-- [Console Commands](https://github.com/NeonPixels/blasphemous.prayer-wheel#console-commands)
+<!--- [Console Commands](https://github.com/NeonPixels/blasphemous.prayer-wheel#console-commands)-->
 - [Mod info](https://github.com/NeonPixels/blasphemous.prayer-wheel#mod-info)
   - [Current features](https://github.com/NeonPixels/blasphemous.prayer-wheel#current-features)
   - [Planned features](https://github.com/NeonPixels/blasphemous.prayer-wheel#planned-features)
@@ -31,7 +31,9 @@
 
 ## Links
 
-- Discord: [Blasphemous General Server](https://discord.gg/Blasphemous)
+- [Blasphemous Modding Discord](https://discord.gg/pddcGqPH)
+- [Blasphemous General Discord](https://discord.gg/Blasphemous)
+           
 
 <!-- [![how-to](https://img.shields.io/badge/how--to-use-blue.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/master/HOW-TO.md) -->
 ---
@@ -59,13 +61,13 @@ Remove the following files and folders from the `Modding` folder:
 
 ---
 
-## Console commands
+<!--## Console commands
 - Press the `backslash` key to open the debug console
 - Type the desired command followed by the parameters all separated by a single space
 
 | Command | Parameters | Description |
 | ------- | ----------- | ------- |
-| `prayerwheel help` | none | List all available commands |
+| `prayerwheel help` | none | List all available commands |-->
 
 ---
 
@@ -77,6 +79,7 @@ Prayer Wheel is a modification (mod) for [Blasphemous](https://thegamekitchen.co
 
 - Hold "use" button to display the selection wheel
 - Use configured keys to cycle the wheel
+
 
 
 ### Planned features
