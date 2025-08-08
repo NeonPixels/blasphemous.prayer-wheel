@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Rewired;
 using Gameplay.GameControllers.Bosses.Isidora;
 using Gameplay.UI;
+using FMOD.Studio;
 
 namespace PrayerWheel
 {
@@ -72,7 +73,8 @@ namespace PrayerWheel
 
 
         // Base game input blockers that prevent activating the prayer wheel
-        private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING", "dog_block" };
+        private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING",
+                                            "dog_block", "comingtoaltar_block" };
          //TODO: Add more blockers?
 
         private float deltaTimeButtonHeld = 0.0f;
@@ -339,6 +341,15 @@ namespace PrayerWheel
 
         // -- Blockers --
 
+        private static ControllerType GetActiveControllerType()
+        {
+            return Rewired.ReInput.players.GetPlayer(0)
+                        .controllers.maps.GetMap(Core.Input.ActiveController.type,
+                                                 Core.Input.ActiveController.id,
+                                                 "Default",
+                                                 "Default").controllerType;
+        }
+
         private bool _inputActionsBlocked = false;
 
         private void BlockActionInputs()
@@ -501,6 +512,11 @@ namespace PrayerWheel
             PrayerRight.GetComponent<SpriteRenderer>().sprite = GetPrayerRight().picture;
         }
 
+        private string _soundSwapPrayer = "event:/SFX/UI/EquipPrayer";
+        private EventInstance _soundEvent;
+
+        private float SOUND_VOLUME = 0.35f;
+
         private void SwapLeft()
         {
             if (!IsOverlayVisible) return;
@@ -518,6 +534,8 @@ namespace PrayerWheel
 
             Core.InventoryManager.SetPrayerInSlot(0, nextPrayer);
             UpdatePrayers();
+
+            _soundEvent.start();
 
             // ModLog.Info("Swapping to the left");
         }
@@ -539,6 +557,10 @@ namespace PrayerWheel
 
             Core.InventoryManager.SetPrayerInSlot(0, nextPrayer);
             UpdatePrayers();
+
+            //Core.Audio.PlayOneShot(_soundSwapPrayer);
+            _soundEvent.start();
+            //_soundEvent.release();
 
             // ModLog.Info("Swapping to the right");
         }
@@ -697,6 +719,9 @@ namespace PrayerWheel
             FakePrayerRight     = this.gameObject.transform.Find(ICON_FAKEPRAYER_RIGHT_NAME).gameObject;
             FakePrayerIncoming  = this.gameObject.transform.Find(ICON_FAKEPRAYER_INCOMING_NAME).gameObject;
 
+            _soundEvent = Core.Audio.CreateEvent(_soundSwapPrayer);
+            _soundEvent.setVolume(SOUND_VOLUME);
+
             UpdatePrayers();
             HideOverlay();
 
@@ -744,18 +769,10 @@ namespace PrayerWheel
 
         void OnDestroy()
         {
+            _soundEvent.release();
             ResetHoldStatus();
             UnblockActionInputs();
             //ModLog.Info($"{name}: PrayerWheel Destroyed");
-        }
-
-        private ControllerType GetActiveControllerType()
-        {
-            return Rewired.ReInput.players.GetPlayer(0)
-                        .controllers.maps.GetMap(Core.Input.ActiveController.type,
-                                                 Core.Input.ActiveController.id,
-                                                 "Default",
-                                                 "Default").controllerType;
-        }
+        }        
     }
 }
