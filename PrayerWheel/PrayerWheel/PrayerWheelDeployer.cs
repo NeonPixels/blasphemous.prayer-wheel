@@ -17,14 +17,12 @@ namespace PrayerWheel
         {
             if (!Assemble())
             {
-                ModLog.Error("Failed to assemble PrayerWheel! Feature can't be enabled!");
+                ModLog.Error("Failed to assemble PrayerWheel!");
                 Disable();
                 return;
             }
 
-            SpawnManager.OnPlayerSpawn += Deploy;
-
-            ModLog.Info("PrayerWheel Feature Enabled!");
+            SpawnManager.OnPlayerSpawn += Deploy;            
         }
 
         public void Disable()
@@ -53,11 +51,9 @@ namespace PrayerWheel
         
         private bool Assemble()
         {
-            ModLog.Info("Assemble: START");
+            //ModLog.Info("Assemble: START");
 
-
-            ModLog.Info("Assemble: Instantiate object");
-
+            //ModLog.Info("Assemble: Instantiate object");
             PrayerWheel_Prefab = new GameObject(PrefabName);
             if (null == PrayerWheel_Prefab)
             {
@@ -73,56 +69,56 @@ namespace PrayerWheel
                 return false;
             }
 
-            ModLog.Info("Assemble: Create prayer icons");
-            behaviour.PrayerActive = new GameObject("PrayerActive");
+            //ModLog.Info("Assemble: Create prayer icons");
+            behaviour.PrayerActive = new GameObject(PrayerWheelBehaviour.ICON_PRAYER_ACTIVE_NAME);
             {
                 behaviour.PrayerActive.transform.localPosition = new Vector2(0f, 0f);
                 SpriteRenderer renderer = behaviour.PrayerActive.AddComponent<SpriteRenderer>();
                 renderer.sortingLayerName = "In-Game UI";
-                renderer.sortingOrder = 0;
+                renderer.sortingOrder = PrayerWheelBehaviour.ICON_PRAYER_SORTING_ORDER;
 
                 behaviour.PrayerActive.transform.parent = PrayerWheel_Prefab.transform;
             }
 
             behaviour.PrayerLeft = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.PrayerLeft.name = "PrayerLeft";
-            behaviour.PrayerLeft.transform.localPosition = new Vector2(-0.8f, 0f);
+            behaviour.PrayerLeft.name = PrayerWheelBehaviour.ICON_PRAYER_LEFT_NAME;
+            behaviour.PrayerLeft.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_LEFT_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
 
             behaviour.PrayerRight = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.PrayerRight.name = "PrayerRight";
-            behaviour.PrayerRight.transform.localPosition = new Vector2(0.8f, 0f);
+            behaviour.PrayerRight.name = PrayerWheelBehaviour.ICON_PRAYER_RIGHT_NAME;
+            behaviour.PrayerRight.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_RIGHT_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
 
 
             // Prayer icons for animation
             behaviour.FakePrayerActive = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.FakePrayerActive.name = "FakePrayerActive";
-            behaviour.FakePrayerActive.transform.localPosition = new Vector2(0f, 0f);
+            behaviour.FakePrayerActive.name = PrayerWheelBehaviour.ICON_FAKEPRAYER_ACTIVE_NAME;
+            behaviour.FakePrayerActive.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_ACTIVE_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
             {
                 SpriteRenderer renderer = behaviour.FakePrayerActive.GetComponent<SpriteRenderer>();
-                renderer.sortingOrder = 50;
+                renderer.sortingOrder = PrayerWheelBehaviour.ICON_FAKEPRAYER_SORTING_ORDER;
             }
 
             behaviour.FakePrayerLeft = GameObject.Instantiate<GameObject>(behaviour.FakePrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.FakePrayerLeft.name = "FakePrayerLeft";
-            behaviour.FakePrayerLeft.transform.localPosition = new Vector2(-0.8f, 0f);
+            behaviour.FakePrayerLeft.name = PrayerWheelBehaviour.ICON_FAKEPRAYER_LEFT_NAME;
+            behaviour.FakePrayerLeft.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_LEFT_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
 
             behaviour.FakePrayerRight = GameObject.Instantiate<GameObject>(behaviour.FakePrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.FakePrayerRight.name = "FakePrayerRight";
-            behaviour.FakePrayerRight.transform.localPosition = new Vector2(0.8f, 0f);
+            behaviour.FakePrayerRight.name = PrayerWheelBehaviour.ICON_FAKEPRAYER_RIGHT_NAME;
+            behaviour.FakePrayerRight.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_RIGHT_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
 
             behaviour.FakePrayerIncoming = GameObject.Instantiate<GameObject>(behaviour.FakePrayerActive, PrayerWheel_Prefab.transform);
-            behaviour.FakePrayerIncoming.name = "FakePrayerIncoming";
-            behaviour.FakePrayerIncoming.transform.localPosition = new Vector2(-0.8f, 0f);
+            behaviour.FakePrayerIncoming.name = PrayerWheelBehaviour.ICON_FAKEPRAYER_INCOMING_NAME;
+            behaviour.FakePrayerIncoming.transform.localPosition = new Vector2(PrayerWheelBehaviour.ICON_PRAYER_ACTIVE_X, PrayerWheelBehaviour.ICON_PRAYER_Y);
 
 
-            ModLog.Info("Assemble: Create active prayer frame");
+            //ModLog.Info("Assemble: Create active prayer frame");
             {
                 behaviour.PrayerFrame = GameObject.Instantiate<GameObject>(behaviour.PrayerActive, PrayerWheel_Prefab.transform);
-                behaviour.PrayerFrame.name = "PrayerFrame";
+                behaviour.PrayerFrame.name = PrayerWheelBehaviour.ICON_FRAME_NAME;
 
                 SpriteImportOptions importOptions = new()
                 {
-                    Pivot = new Vector2(0.5f, 0.5f)
+                    Pivot = new Vector2(PrayerWheelBehaviour.ICON_FRAME_PIVOT_X, PrayerWheelBehaviour.ICON_FRAME_PIVOT_Y)
                 };
 
                 SpriteRenderer spriteRenderer = behaviour.PrayerFrame.GetComponent<SpriteRenderer>();
@@ -133,7 +129,7 @@ namespace PrayerWheel
                                                                   importOptions);
 
                 spriteRenderer.sprite = sprite;
-                spriteRenderer.sortingOrder = 100;
+                spriteRenderer.sortingOrder = PrayerWheelBehaviour.ICON_FRAME_SORTING_ORDER;
 
             }
 
@@ -141,7 +137,7 @@ namespace PrayerWheel
 
             Main.PrayerWheelMod.PrefabHelper.Store(PrayerWheel_Prefab);
 
-            ModLog.Info("Assemble: DONE");
+            //ModLog.Info("Assemble: DONE");
 
             return true;
         }
@@ -160,7 +156,7 @@ namespace PrayerWheel
 
         private void Deploy(Penitent penitent)
         {
-            ModLog.Info("Deploying PrayerWheel");
+            //ModLog.Info("Deploying PrayerWheel");
 
             if(null == penitent)
             {
@@ -201,12 +197,12 @@ namespace PrayerWheel
                 return;
             }           
 
-            ModLog.Info("PrayerWheel Deployed!");
+            //ModLog.Info("PrayerWheel Deployed!");
         }
 
         private void Remove()
         {
-            ModLog.Info("Removing PrayerWheel...");
+            //ModLog.Info("Removing PrayerWheel...");
 
             if(null != PrayerWheel_Prefab)
                 Object.Destroy(PrayerWheel_Prefab);
@@ -219,7 +215,7 @@ namespace PrayerWheel
                 }
             }
 
-            ModLog.Info("PrayerWheel Removed!");
+            //ModLog.Info("PrayerWheel Removed!");
         }
     }
 }
