@@ -73,8 +73,8 @@ namespace PrayerWheel
 
 
         // Base game input blockers that prevent activating the prayer wheel
-        private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING",
-                                            "dog_block", "comingtoaltar_block" };
+        // private string[] InputBlockers = { "DIALOG", "FADE", "BLOCK_UNTIL_FPS_STABLE", "INTERACTABLE", "INVENTORY", "UIBLOCKING",
+        //                                    "dog_block", "comingtoaltar_block" };
          //TODO: Add more blockers?
 
         private float deltaTimeButtonHeld = 0.0f;
@@ -84,19 +84,20 @@ namespace PrayerWheel
 
         // TODO: Some of the functions below might be redundant. For example, CurrentState == Playing might overlap with some input blockers
 
-        private bool IsInputBlocked
-        {
-            get
-            {
-                foreach (string blockType in InputBlockers)
-                {
-                    if (Core.Input.HasBlocker(blockType))
-                        return true;
-                }
+        // TODO: Add exceptions to blocked input? For example, when dodging?
+        // private bool IsInputBlocked
+        // {
+        //     get
+        //     {
+        //         foreach (string blockType in InputBlockers)
+        //         {
+        //             if (Core.Input.HasBlocker(blockType))
+        //                 return true;
+        //         }
 
-                return false;
-            }
-        }
+        //         return false;
+        //     }
+        // }
 
         private bool IsPlayerInValidState
         {
@@ -161,7 +162,7 @@ namespace PrayerWheel
         private void CheckIfInteractButtonIsHeld() // TODO: Add LongPress or Hold check to input manager?
         {
             if (Main.PrayerWheelMod.InputHandler.GetButtonUp(ButtonCode.Interact)
-                 || IsInputBlocked
+                 || Core.Input.InputBlocked//IsInputBlocked
                  || !IsPlayerInValidState
                  || !IsGameInValidState
                  || !IsInventoryAllowed
@@ -473,7 +474,11 @@ namespace PrayerWheel
 
             int equippedIndex = GetEquippedPrayerIndex();
 
-            if (Core.InventoryManager.GetPrayersOwned().Count == 1 && IsAnyPrayerEquipped()) return _emptyPrayer;
+            if (Core.InventoryManager.GetPrayersOwned().Count == 1)
+            {
+                if (IsAnyPrayerEquipped()) return _emptyPrayer;
+                else return Core.InventoryManager.GetPrayersOwned()[0];
+            }
 
             int leftIncomingIndex = equippedIndex<0? -2 : equippedIndex - 2;
 
@@ -515,7 +520,7 @@ namespace PrayerWheel
         private string _soundSwapPrayer = "event:/SFX/UI/EquipPrayer";
         private EventInstance _soundEvent;
 
-        private float SOUND_VOLUME = 0.35f;
+        private float SOUND_VOLUME = 0.5f;
 
         private void SwapLeft()
         {
@@ -735,20 +740,21 @@ namespace PrayerWheel
                 return;
             }
 
+            // If there are no prayers... No point in doing anything
+            if (Core.InventoryManager.GetPrayersOwned().Count <= 0) return;
+
             CheckIfInteractButtonIsHeld();
 
             // Check if button is being held, but do nothing if we don't have prayers
-            if (IsInteractButtonHeld && Core.InventoryManager.GetPrayersOwned().Count > 0)
+            if (IsInteractButtonHeld)
             {
                 //ModLog.Info($"{name}: Holding down interact button...");
                 BlockActionInputs();
 
                 StartTransitionToShowOverlay();
 
-                // for(int idx = (int)KeyCode.Joystick1Button0; idx <= (int)KeyCode.Joystick1Button19; idx++)
-                // {
-                //     if(UnityEngine.Input.GetKeyDown((KeyCode)idx)) ModLog.Info($"Joystick 1 Button {idx} down");
-                // }
+                // If we only have one prayer and it is equipped, we can't swap
+                if (Core.InventoryManager.GetPrayersOwned().Count == 1 && IsAnyPrayerEquipped()) return;
 
                 if (Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_LEFT_KB) || Main.PrayerWheelMod.InputHandler.GetKeyDown(INPUT_LEFT_JOY))
                 {
