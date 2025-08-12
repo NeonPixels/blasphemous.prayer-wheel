@@ -20,7 +20,6 @@
 
 - [Instalación](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#instalacion)
 - [Créditos](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#creditos)
-<!-- - [Comandos de consola](https://github.com/NeonPixels/blasphemous.prayer-wheel#comandos-de-consola) -->
 - [Información del mod](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#informacion-del-mod)
   - [Preguntas Frecuentes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#preguntas-frecuentes)
   - [Notas importantes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#notas-importantes)
@@ -58,16 +57,6 @@ Elimina los siguientes archivos y carpetas de la carpeta `Modding`:
 
 ---
 
-<!-- ## Comandos de consola
-- Pulsa la tecla `º` para abrir la consola de depuración
-- Escribe el comando deseado, seguido de los parámetros, separados por un único espacio en blanco
-
-| Comando | Parámetros | Descripcion |
-| ------- | ----------- | ------- |
-| `prayerwheel ayuda` | ninguno | Muestra una lista de los comandos disponibles |
-
---- -->
-
 ## Informacion del mod
 
 Rueda de Plegarias es una modificación (mod) de [Blasphemous](https://thegamekitchen.com/blasphemous/) que permite seleccionar la plegaria activa sin necesidad de abrir el menú de inventario, mediante una interfaz rotatoria.
@@ -81,7 +70,6 @@ Rueda de Plegarias es una modificación (mod) de [Blasphemous](https://thegameki
 - Las teclas pueden configurarse editando el siguiente archivo en la carpeta del juego: `Modding\keybindings\PrayerWheel.txt`
 - Referencia de los códigos de teclas: [Documentación de Unity](https://docs.unity3d.com/2017.3/Documentation/ScriptReference/KeyCode.html)
 
-
 ### Preguntas Frecuentes
 
 [![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/FAQ.es.md)
@@ -89,7 +77,6 @@ Rueda de Plegarias es una modificación (mod) de [Blasphemous](https://thegameki
 ### Notas importantes
 
 - Solo funciona con la versión más reciente del juego: `4.0.67`
-
 
 ## Enlaces
 

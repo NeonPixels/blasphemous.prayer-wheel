@@ -19,7 +19,6 @@
 
 - [Credits](https://github.com/NeonPixels/blasphemous.prayer-wheel#credits)
 - [Installation](https://github.com/NeonPixels/blasphemous.prayer-wheel#installation)
-<!--- [Console Commands](https://github.com/NeonPixels/blasphemous.prayer-wheel#console-commands)-->
 - [Mod info](https://github.com/NeonPixels/blasphemous.prayer-wheel#mod-info)
   - [FAQ]((https://github.com/NeonPixels/blasphemous.prayer-wheel#faq))
   - [Important notes](https://github.com/NeonPixels/blasphemous.prayer-wheel#important-notes)
@@ -32,7 +31,6 @@
 - Coding help & inspiration - [BrandenEK](https://github.com/BrandenEK)
 
 And a very special thanks to all the members of the Blasphemous Modding Discord for their support.
-
 
 ---
 
@@ -55,16 +53,6 @@ Remove the following files and folders from the `Modding` folder:
 - `localitazion\PrayerWheel.txt`
 
 <b>Note:</b> When manually updating the mod to a new version, it is recommended to manually remove the previous mod files first, as files that might have been removed from the mod release won't be removed automatically.
-
----
-
-<!--## Console commands
-- Press the `backslash` key to open the debug console
-- Type the desired command followed by the parameters all separated by a single space
-
-| Command | Parameters | Description |
-| ------- | ----------- | ------- |
-| `prayerwheel help` | none | List all available commands |-->
 
 ---
 
@@ -94,7 +82,6 @@ Prayer Wheel is a modification (mod) for [Blasphemous](https://thegamekitchen.co
 - [Blasphemous Official Site](https://thegamekitchen.com/blasphemous/)
 - [Blasphemous Modding Discord](https://discord.gg/pddcGqPH)
 - [Blasphemous General Discord](https://discord.gg/Blasphemous)
-
 
 ---
 
