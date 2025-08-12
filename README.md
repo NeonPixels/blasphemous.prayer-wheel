@@ -20,7 +20,7 @@
 - [Credits](https://github.com/NeonPixels/blasphemous.prayer-wheel#credits)
 - [Installation](https://github.com/NeonPixels/blasphemous.prayer-wheel#installation)
 - [Mod info](https://github.com/NeonPixels/blasphemous.prayer-wheel#mod-info)
-  - [FAQ]((https://github.com/NeonPixels/blasphemous.prayer-wheel#faq))
+  - [FAQ](https://github.com/NeonPixels/blasphemous.prayer-wheel#faq)
   - [Important notes](https://github.com/NeonPixels/blasphemous.prayer-wheel#important-notes)
 - [Links](https://github.com/NeonPixels/blasphemous.prayer-wheel#links)
 
