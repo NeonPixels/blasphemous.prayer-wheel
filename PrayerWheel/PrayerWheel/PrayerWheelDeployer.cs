@@ -172,7 +172,7 @@ namespace PrayerWheel
 
             if(IsDeployed(penitent))
             {
-                ModLog.Info("PrayerWheel already deployed");
+                //ModLog.Info("PrayerWheel already deployed");
                 return;
             }
 

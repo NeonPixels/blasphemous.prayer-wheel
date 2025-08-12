@@ -1,6 +1,5 @@
 using HarmonyLib;
 using Framework.Managers;
-using Blasphemous.ModdingAPI;
 using System.Collections.Generic;
 
 namespace PrayerWheel.Utilities
@@ -37,7 +36,7 @@ namespace PrayerWheel.Utilities
                     this.OnInputLocked(actionId);
                 }
 
-                ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been enabled.");
+                //ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been enabled.");
             }
 
             //_mutex.ReleaseMutex();
@@ -65,7 +64,7 @@ namespace PrayerWheel.Utilities
                 this.OnInputUnlocked(actionId);
             }
 
-            ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been disabled.");
+            //ModLog.Info($"Custom Input Blocker ({name})[{actionId}] has been disabled.");
         }
 
         public bool HasBlocker(string name)
@@ -128,7 +127,7 @@ namespace PrayerWheel.Utilities
                 RemoveBlocker_Internal(name);
             }
 
-            ModLog.Info("All Custom Input Blockers have been removed.");
+            //ModLog.Info("All Custom Input Blockers have been removed.");
 
             //_mutex.ReleaseMutex();
         }

@@ -58,7 +58,7 @@ namespace PrayerWheel.Utilities
                     if (bindings.Contains(aem.keyCode))
                     {
                         actions.Add(aem.actionId);
-                        ModLog.Info($"InputMappingHelper::GetKeyboardBindingActions: Added Keyboard Action '{actionName}' Id '{aem.actionId}' for KeyCode '{aem.keyCode.ToString()}'");
+                        //ModLog.Info($"InputMappingHelper::GetKeyboardBindingActions: Added Keyboard Action '{actionName}' Id '{aem.actionId}' for KeyCode '{aem.keyCode.ToString()}'");
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace PrayerWheel.Utilities
 
         public static List<int> GetJoystickBindingActions(List<KeyCode> bindings)
         {
-            ModLog.Info("GetJoystickBindingActions START");
+            //ModLog.Info("GetJoystickBindingActions START");
 
             Player player = Rewired.ReInput.players.GetPlayer(0);
             Dictionary<int, List<int>> joystickBindings = ParseJoystickBindings(bindings);
@@ -102,7 +102,7 @@ namespace PrayerWheel.Utilities
                             {
                                 actions.Add(aem.actionId);
 
-                                ModLog.Info("Added action " + aem.actionId + " for Joystick " + joystick.id + " Button " + aem.elementIndex + ": " + ReInput.mapping.GetAction(aem.actionId).name);
+                                //ModLog.Info("Added action " + aem.actionId + " for Joystick " + joystick.id + " Button " + aem.elementIndex + ": " + ReInput.mapping.GetAction(aem.actionId).name);
                             }
                         }
                     }

@@ -1,41 +1,39 @@
-<p align="center">  
-  <h1 align="center">Prayer Wheel</h1><!-- <img src="logo.png"> -->
+<div align="center">
+  <img src="doc/img/PrayerWheel_Logo.png" alt="Prayer Wheel">
   
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.md)
-[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/README.es.md)
-
-</p>
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md)
+</div>
 
 ---
 
-<p align="center">
+<div align="center">
   <img src="https://img.shields.io/github/v/release/NeonPixels/blasphemous.prayer-wheel">
   <img src="https://img.shields.io/github/last-commit/NeonPixels/blasphemous.prayer-wheel?color=important">
   <img src="https://img.shields.io/github/downloads/NeonPixels/blasphemous.prayer-wheel/total?color=success">
-</p>
+</div>
 
 ---
 
 ## Table of Contents
 
-- [Links](https://github.com/NeonPixels/blasphemous.prayer-wheel#links)
+- [Credits](https://github.com/NeonPixels/blasphemous.prayer-wheel#credits)
 - [Installation](https://github.com/NeonPixels/blasphemous.prayer-wheel#installation)
 <!--- [Console Commands](https://github.com/NeonPixels/blasphemous.prayer-wheel#console-commands)-->
 - [Mod info](https://github.com/NeonPixels/blasphemous.prayer-wheel#mod-info)
-  - [Current features](https://github.com/NeonPixels/blasphemous.prayer-wheel#current-features)
-  - [Planned features](https://github.com/NeonPixels/blasphemous.prayer-wheel#planned-features)
+  - [FAQ]((https://github.com/NeonPixels/blasphemous.prayer-wheel#faq))
   - [Important notes](https://github.com/NeonPixels/blasphemous.prayer-wheel#important-notes)
-- [Credits](https://github.com/NeonPixels/blasphemous.prayer-wheel#credits)
+- [Links](https://github.com/NeonPixels/blasphemous.prayer-wheel#links)
 
 ---
 
-## Links
+## Credits
 
-- [Blasphemous Modding Discord](https://discord.gg/pddcGqPH)
-- [Blasphemous General Discord](https://discord.gg/Blasphemous)
-           
+- Coding help & inspiration - [BrandenEK](https://github.com/BrandenEK)
 
-<!-- [![how-to](https://img.shields.io/badge/how--to-use-blue.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/master/HOW-TO.md) -->
+And a very special thanks to all the members of the Blasphemous Modding Discord for their support.
+
+
 ---
 
 ## Installation
@@ -47,14 +45,13 @@ Manual installation:
 1. Check the requirements for the latest release of the mod from the [Releases](https://github.com/NeonPixels/blasphemous.prayer-wheel/releases) page
 2. Download the required release of the [Modding API](https://github.com/BrandenEK/Blasphemous-Modding-API/releases)
 3. Follow the instructions there on how to install the API, take note of the location of the `Modding` folder
-8. Download the latest release of the mod from the [Releases](https://github.com/NeonPixels/blasphemous.prayer-wheel/releases) page
-9. Extract the contents of the `PrayerWheel.zip` file into the `Modding` folder
+4. Download the latest release of the mod from the [Releases](https://github.com/NeonPixels/blasphemous.prayer-wheel/releases) page
+5. Extract the contents of the `PrayerWheel.zip` file into the `Modding` folder
 
 Manual removal:
 Remove the following files and folders from the `Modding` folder:
 - `plugins\PrayerWheel.dll`
 - `data\PrayerWheel\`
-- `levels\PrayerWheel\`
 - `localitazion\PrayerWheel.txt`
 
 <b>Note:</b> When manually updating the mod to a new version, it is recommended to manually remove the previous mod files first, as files that might have been removed from the mod release won't be removed automatically.
@@ -75,23 +72,32 @@ Remove the following files and folders from the `Modding` folder:
 
 Prayer Wheel is a modification (mod) for [Blasphemous](https://thegamekitchen.com/blasphemous/), which adds the ability to select the active prayer without opening the inventory menu, via a selection wheel.
 
-### Current features
+<div align="center">
+  <img src="doc/img/prayerwheel_slide.gif" alt="Prayer Wheel slide">
+</div>
 
-- Hold "use" button to display the selection wheel
-- Use configured keys to cycle the wheel
+- Hold the `use` button to display the selection wheel.
+- Use configured keys to cycle the wheel.
+- Keys can be configured by editing the following file in the game folder: `Modding\keybindings\PrayerWheel.txt`
+- Key Codes reference: [Unity Documentation](https://docs.unity3d.com/2017.3/Documentation/ScriptReference/KeyCode.html)
 
+## FAQ
 
-
-### Planned features
-
-- In-game input configuration
-- Sounds
-- Prayer sorting
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/FAQ.md)
 
 ### Important notes
 
 - Only works on the most current game version: `4.0.67`
 
-## Credits
+## Links
 
-- Coding help & inspiration - [BrandenEK](https://github.com/BrandenEK)
+- [Blasphemous Official Site](https://thegamekitchen.com/blasphemous/)
+- [Blasphemous Modding Discord](https://discord.gg/pddcGqPH)
+- [Blasphemous General Discord](https://discord.gg/Blasphemous)
+
+
+---
+
+<div align="center">
+  <img src="doc/img/neonpixels_logo.png" alt="Neon Pixels">
+</div>

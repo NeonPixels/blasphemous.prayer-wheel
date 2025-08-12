@@ -19,7 +19,7 @@ namespace PrayerWheel
         {
             GameSettings = new Config();
 
-            ModLog.Info($"{ModInfo.MOD_NAME} has been created");
+            //ModLog.Info($"{ModInfo.MOD_NAME} has been created");
         }
 
         // --- Utilities ---
@@ -35,7 +35,7 @@ namespace PrayerWheel
         protected override void OnInitialize()
         {
             LocalizationHandler.RegisterDefaultLanguage("es");
-            ModLog.Info($"{ModInfo.MOD_NAME} has been initialized");
+            //ModLog.Info($"{ModInfo.MOD_NAME} has been initialized");
 
             PrefabHelper        = new Utilities.PrefabHelper();
             CustomInputBlocker  = new Utilities.CustomInputBlocker();
@@ -82,7 +82,7 @@ namespace PrayerWheel
 
         protected override void OnLevelLoaded(string oldLevel, string newLevel)
         {
-            ModLog.Info($"OnLevelLoaded: {newLevel} has been loaded");
+            //ModLog.Info($"OnLevelLoaded: {newLevel} has been loaded");
 
             if (oldLevel == "" && newLevel == "MainMenu")
             {

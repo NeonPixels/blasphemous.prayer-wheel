@@ -1,37 +1,38 @@
-<p align="center">  
-  <h1 align="center">Rueda de Plegarias</h1><!-- <img src="logo.png"> -->
+<div align="center">
+  <img src="doc/img/PrayerWheel_Logo.png" alt="Prayer Wheel">
+  <h2 align="center">-Rueda de Plegarias-</h2>
   
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.md)
 [![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md) 
-
-</p>
+</div>
 
 ---
 
-<p align="center">
+<div align="center">
   <img src="https://img.shields.io/github/v/release/NeonPixels/blasphemous.prayer-wheel">
   <img src="https://img.shields.io/github/last-commit/NeonPixels/blasphemous.prayer-wheel?color=important">
   <img src="https://img.shields.io/github/downloads/NeonPixels/blasphemous.prayer-wheel/total?color=success">
-</p>
+</div>
 
 ---
 
 ## Tabla de Contenidos
 
-- [Enlaces](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#enlaces)
 - [Instalación](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#instalacion)
-- [Comandos de consola](https://github.com/NeonPixels/blasphemous.prayer-wheel#comandos-de-consola)
-- [Información del mod](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#informacion-del-mod)
-  - [Características actuales](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#caracteristicas-actuales)
-  - [Características planificadas](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#caracteristicas-planificadas)
-  - [Notas importantes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#notas-importantes)
 - [Créditos](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#creditos)
+<!-- - [Comandos de consola](https://github.com/NeonPixels/blasphemous.prayer-wheel#comandos-de-consola) -->
+- [Información del mod](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#informacion-del-mod)
+  - [Preguntas Frecuentes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#preguntas-frecuentes)
+  - [Notas importantes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#notas-importantes)
+- [Enlaces](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#enlaces)
 
 ---
 
-## Enlaces
+## Creditos
 
-- Discord: [Servidor General de Blasphemous](https://discord.gg/Blasphemous)
+- Ayuda de programación e inspiración - [BrandenEK](https://github.com/BrandenEK)
+
+Agradecimientos especiales a toda la gente del Discord de Modding de Blasphemous por su apoyo.
 
 ---
 
@@ -51,14 +52,13 @@ Desinstalación manual:
 Elimina los siguientes archivos y carpetas de la carpeta `Modding`:
 - `plugins\PrayerWheel.dll`
 - `data\PrayerWheel\`
-- `levels\PrayerWheel\`
 - `localitazion\PrayerWheel.txt`
 
 <b>Nota:</b> Cuando se actualiza manualmente a una nueva versión del mod, se recomienda eliminar manialmente los archivos de la versión anterior, dado que si hay archivos que se han eliminado de la nueva versión, estos no será eliminados automaticamente al instalar manualmente.
 
 ---
 
-## Comandos de consola
+<!-- ## Comandos de consola
 - Pulsa la tecla `º` para abrir la consola de depuración
 - Escribe el comando deseado, seguido de los parámetros, separados por un único espacio en blanco
 
@@ -66,27 +66,39 @@ Elimina los siguientes archivos y carpetas de la carpeta `Modding`:
 | ------- | ----------- | ------- |
 | `prayerwheel ayuda` | ninguno | Muestra una lista de los comandos disponibles |
 
----
+--- -->
 
 ## Informacion del mod
 
 Rueda de Plegarias es una modificación (mod) de [Blasphemous](https://thegamekitchen.com/blasphemous/) que permite seleccionar la plegaria activa sin necesidad de abrir el menú de inventario, mediante una interfaz rotatoria.
 
-### Caracteristicas actuales
+<div align="center">
+  <img src="doc/img/prayerwheel_slide.gif" alt="Prayer Wheel slide">
+</div>
 
-- Mantén pulsado el botón de "usar" para que aparezca la rueda
-- Usa las teclas configuradas para seleccionar la plegaria activa
+- Mantener pulsada la tecla de `usar` para mostrar la rueda de selección.
+- Pulsar las teclas configuradas para rotar la rueda.
+- Las teclas pueden configurarse editando el siguiente archivo en la carpeta del juego: `Modding\keybindings\PrayerWheel.txt`
+- Referencia de los códigos de teclas: [Documentación de Unity](https://docs.unity3d.com/2017.3/Documentation/ScriptReference/KeyCode.html)
 
-### Caracteristicas planeadas
 
-- Configuración de teclas dentro del juego
-- Sonidos
-- Organización de plegarias
+### Preguntas Frecuentes
+
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/FAQ.es.md)
 
 ### Notas importantes
 
 - Solo funciona con la versión más reciente del juego: `4.0.67`
 
-## Creditos
 
-- Ayuda de programación e inspiración - [BrandenEK](https://github.com/BrandenEK)
+## Enlaces
+
+- [Página Oficial de Blasphemous](https://thegamekitchen.com/blasphemous/)
+- [Discord de Modding de Blasphemous](https://discord.gg/pddcGqPH)
+- [Discord General de Blasphemous](https://discord.gg/Blasphemous)
+
+---
+
+<div align="center">
+  <img src="doc/img/neonpixels_logo.png" alt="Neon Pixels">
+</div>
