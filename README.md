@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="doc/img/PrayerWheel_Logo.png" alt="Prayer Wheel">
+  <img src="doc/img/prayerwheel_logo.png" alt="Prayer Wheel">
   
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.md)
 [![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md)
