@@ -2,23 +2,15 @@
 using System.Linq;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Input;
-using Blasphemous.ModdingAPI.Persistence;
 using Rewired;
 using UnityEngine;
 
 namespace PrayerWheel
 {
-    public class PrayerWheelMod : BlasMod, IPersistentMod
+    public class PrayerWheelMod : BlasMod
     {
-        public string PersistentID => "ID_PRAYER_WHEEL";
-
-        // Save file info
-        public Config GameSettings { get; private set; }
-
         public PrayerWheelMod() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION)
         {
-            GameSettings = new Config();
-
             //ModLog.Info($"{ModInfo.MOD_NAME} has been created");
         }
 
@@ -54,25 +46,8 @@ namespace PrayerWheel
             });
         }
 
-        public SaveData SaveGame()
-        {
-            return new PrayerWheelSaveData
-            {
-                config = GameSettings
-            };
-        }
-
-        public void LoadGame(SaveData data)
-        {
-            PrayerWheelSaveData saveGameData = data as PrayerWheelSaveData;
-
-            GameSettings = saveGameData.config;
-        }
-
         public void ResetGame()
-        {
-            GameSettings = new Config();
-        }
+        { }
 
         protected override void OnRegisterServices(ModServiceProvider provider)
         { }
