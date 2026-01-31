@@ -1,5 +1,5 @@
 <div align="center">  
-  <img src="doc/img/prayerwheel_logo.png" alt="Prayer Wheel">
+  <img src="img/prayerwheel_logo.png" alt="Prayer Wheel">
   <h2 align="center">-FAQ-</h2>
     
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/FAQ.md)
@@ -36,7 +36,7 @@
 <details>
   <summary><b>Is this mod compatible with other mods?</b></summary>
   <br/>
-  It should be, the Prayer Wheel itself is attached to the base game Penitent, and makes use of the base game inventory system to witch prayers.<br>
+  It should be, the Prayer Wheel itself is attached to the base game Penitent, and makes use of the base game inventory system to switch prayers.<br>
   Nevertheless, if a mod alters those base game elements, there might be compatibility issues.
 </details>
 <details>
