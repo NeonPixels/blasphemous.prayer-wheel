@@ -9,7 +9,7 @@
     <Authors>NeonPixels</Authors>
     <Company>NeonPixels</Company>
     <Description>Small gameplay mod for Blasphemous that allows selecting the active prayer without opening the inventory menu.</Description>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
 
     <TargetName>PrayerWheel</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
