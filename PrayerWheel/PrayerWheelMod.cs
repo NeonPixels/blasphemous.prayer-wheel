@@ -2,7 +2,6 @@
 using System.Linq;
 using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Input;
-using Blasphemous.ModdingAPI.Persistence;
 using Rewired;
 using UnityEngine;
 
