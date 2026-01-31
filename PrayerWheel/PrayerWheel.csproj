@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.4.1" />
+    <PackageReference Include="Blasphemous.ModdingAPI" Version="3.0.0" />
     <PackageReference Include="Blasphemous.GameLibs" Version="4.0.67" />
   </ItemGroup>
 
@@ -38,7 +38,7 @@
 
     <!-- Copy plugin & resources to development folder -->
     <PropertyGroup>
-      <DevFolder></DevFolder>
+      <DevFolder>DEPLOY_PATH</DevFolder>
     </PropertyGroup>
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevFolder)plugins" />
     <Copy SourceFiles="@(DataDlls)" DestinationFolder="$(DevFolder)data" />
