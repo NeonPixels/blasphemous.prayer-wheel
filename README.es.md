@@ -18,12 +18,12 @@
 
 ## Tabla de Contenidos
 
-- [Instalación](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#instalacion)
-- [Créditos](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#creditos)
-- [Información del mod](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#informacion-del-mod)
-  - [Preguntas Frecuentes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#preguntas-frecuentes)
-  - [Notas importantes](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#notas-importantes)
-- [Enlaces](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/README.es.md#enlaces)
+- [Instalación](#instalacion)
+- [Créditos](#creditos)
+- [Información del mod](#informacion-del-mod)
+  - [Preguntas Frecuentes](#preguntas-frecuentes)
+  - [Notas importantes](#notas-importantes)
+- [Enlaces](#enlaces)
 
 ---
 
