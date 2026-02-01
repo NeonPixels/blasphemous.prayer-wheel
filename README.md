@@ -17,12 +17,12 @@
 
 ## Table of Contents
 
-- [Credits](https://github.com/NeonPixels/blasphemous.prayer-wheel#credits)
-- [Installation](https://github.com/NeonPixels/blasphemous.prayer-wheel#installation)
-- [Mod info](https://github.com/NeonPixels/blasphemous.prayer-wheel#mod-info)
-  - [FAQ](https://github.com/NeonPixels/blasphemous.prayer-wheel#faq)
-  - [Important notes](https://github.com/NeonPixels/blasphemous.prayer-wheel#important-notes)
-- [Links](https://github.com/NeonPixels/blasphemous.prayer-wheel#links)
+- [Credits](#credits)
+- [Installation](#installation)
+- [Mod info](#mod-info)
+  - [FAQ](#faq)
+  - [Important notes](#important-notes)
+- [Links](#links)
 
 ---
 
@@ -69,7 +69,7 @@ Prayer Wheel is a modification (mod) for [Blasphemous](https://thegamekitchen.co
 - Keys can be configured by editing the following file in the game folder: `Modding\keybindings\PrayerWheel.txt`
 - Key Codes reference: [Unity Documentation](https://docs.unity3d.com/2017.3/Documentation/ScriptReference/KeyCode.html)
 
-## FAQ
+### FAQ
 
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/NeonPixels/blasphemous.prayer-wheel/blob/main/doc/FAQ.md)
 
